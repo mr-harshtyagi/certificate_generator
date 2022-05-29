@@ -12,7 +12,8 @@ export default function Certificate() {
           borderStyle: "solid",
           borderWidth: "8px",
           borderColor: "#446A46",
-        }}>
+        }}
+      >
         <div
           style={{
             height: "450px",
@@ -62,7 +63,9 @@ export default function Certificate() {
             >
               This certifies that
             </h1>
-            <h2>{name}</h2>
+            <div style={{ color: "#446A46" }}>
+              <h2>~ {name} ~</h2>
+            </div>
             <h1
               style={{
                 fontFamily: "Tiro Bangla",
@@ -72,7 +75,7 @@ export default function Certificate() {
             >
               has successfully completed IT bootcamp's
             </h1>
-            <h3>{course}</h3>
+            <h3>" {course} "</h3>
             <h1
               style={{
                 fontFamily: "Tiro Bangla",
@@ -96,6 +99,14 @@ export default function Certificate() {
                 src="images/sign.jpg"
                 alt="signature"
               />
+            </div>
+            <div
+              style={{
+                float: "right",
+                marginRight: "-150px",
+                marginTop: "90px",
+              }}
+            >
               <h6>{professor}</h6>
               <h6 style={{ fontSize: "0.7rem" }}>CSE Department, Goa Campus</h6>
             </div>
