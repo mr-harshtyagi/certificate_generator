@@ -27,7 +27,7 @@ export default function SideForm(){
       privateKey:privateKey,
       receiver: "0x1236427d1f1279d5951d61fdf5ab6476e9cf530f", //wallet address of receiver
       key:secretKey,
-      signature:"jvekfjnwefioecj9090432erkjwcdjcnazxkfniecn"
+      signature:"faltu signature"
     };
 
       // axios post dataObject 
