@@ -1,10 +1,45 @@
 import Form from 'react-bootstrap/Form';
 import { Button } from 'react-bootstrap';
 import FormContext from "../FormContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
+import axios from 'axios';
+var CryptoJS = require("crypto-js");
 
 export default function SideForm(){
   const { name,course,professor,setName,setCourse,setProfessor } = useContext(FormContext); 
+  const [secretKey,setSecretKey] =useState("")
+  const privateKey = "F9LwFF7Jmuf2w7icRk3MTBozP333i8TWKKAFmbfrUHVT";
+  const publicKey = "GjgJq7htpLt3rYFTPUyqKBtanupjjuwy6mtYvattKNpN";
+
+  function postDataToServer(){
+    let certificateData={
+      name:name,
+      course:course,
+      professor:professor
+    }
+    let hash = CryptoJS.SHA256(JSON.stringify(certificateData)).toString(
+      CryptoJS.enc.Hex
+    );
+
+    let dataObject = {
+      transaction_hash:hash, //hash 3 fields
+      publicKey: publicKey,
+      privateKey:privateKey,
+      receiver: "0x1236427d1f1279d5951d61fdf5ab6476e9cf530f", //wallet address of receiver
+      key:secretKey,
+      signature:"jvekfjnwefioecj9090432erkjwcdjcnazxkfniecn"
+    };
+
+      // axios post dataObject 
+      axios
+        .post("https://bigchaindb-post-txn.herokuapp.com/post", dataObject)
+        .then(function (response) {
+          console.log(response.data);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+  }
   
     return (
       <>
@@ -68,23 +103,40 @@ export default function SideForm(){
               e.preventDefault();
             }}
           >
-            <Form.Group className="mb-3" controlId="key">
+            <Form.Group
+              onChange={(e) => {
+                setSecretKey(e.target.value);
+              }}
+              value={secretKey}
+              className="mb-3"
+              controlId="key"
+            >
               <Form.Label>Secret Key</Form.Label>
               <Form.Control type="text" placeholder="Enter Secret Key" />
             </Form.Group>
             <Form.Group className="mb-3" controlId="issuer">
-              <Form.Label value="vhdici">Issuer's Public Key</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              <Form.Label>Issuer's Public Key</Form.Label>
+              <Form.Control
+                onChange={() => {}}
+                value="GjgJq7htpLt3rYFTPUyqKBtanupjjuwy6mtYvattKNpN"
+                type="text"
+                placeholder=""
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="receiver">
               <Form.Label>Receiver</Form.Label>
-              <Form.Control type="text" placeholder="" />
+              <Form.Control
+                onChange={() => {}}
+                value="0x1236427d1f1279d5951d61fdf5ab6476e9cf530f"
+                type="text"
+                placeholder=""
+              />
             </Form.Group>
 
             <Button variant="primary" type="submit">
               Issue Credential
             </Button>
-            <Button className="ms-4" variant="danger">
+            <Button onClick={postDataToServer} className="ms-4" variant="danger">
               PDF
             </Button>
           </Form>
