@@ -1,5 +1,8 @@
+import FormContext from "../FormContext";
+import { useContext } from "react";
 
 export default function Certificate() {
+  const { name,course,professor } = useContext(FormContext);
   return (
     <>
       <div
@@ -9,8 +12,7 @@ export default function Certificate() {
           borderStyle: "solid",
           borderWidth: "8px",
           borderColor: "#446A46",
-        }}
-      >
+        }}>
         <div
           style={{
             height: "450px",
@@ -45,11 +47,9 @@ export default function Certificate() {
             <img
               src="images/logo.png"
               alt="logo"
-              style={{ height: "80px", margin: "12px",float:"left" }}
+              style={{ height: "80px", margin: "12px", float: "left" }}
             />
-            <h1 style={{ paddingTop:"10px" }}>
-              BITS PILANI GOA
-            </h1>
+            <h1 style={{ paddingTop: "10px" }}>BITS PILANI GOA</h1>
             <h6> Pilani | Goa | Hyderabad | Dubai</h6>
           </div>
           <div style={{ textAlign: "center" }}>
@@ -62,7 +62,7 @@ export default function Certificate() {
             >
               This certifies that
             </h1>
-            <h2>Mr. Harsh Tyagi</h2>
+            <h2>{name}</h2>
             <h1
               style={{
                 fontFamily: "Tiro Bangla",
@@ -72,7 +72,7 @@ export default function Certificate() {
             >
               has successfully completed IT bootcamp's
             </h1>
-            <h3>"Blockchain Development Course"</h3>
+            <h3>{course}</h3>
             <h1
               style={{
                 fontFamily: "Tiro Bangla",
@@ -96,8 +96,8 @@ export default function Certificate() {
                 src="images/sign.jpg"
                 alt="signature"
               />
-              <h6>Prof. Sukanta Mondal</h6>
-              <h6>CS Department</h6>
+              <h6>{professor}</h6>
+              <h6 style={{ fontSize: "0.7rem" }}>CSE Department, Goa Campus</h6>
             </div>
           </div>
         </div>
