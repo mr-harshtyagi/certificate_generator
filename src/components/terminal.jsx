@@ -1,4 +1,4 @@
-import styles from "./terminal.css"
+import "./terminal.css"
 export default function Terminal() {
   return (
     <div style={{ padding: "10px" }}>

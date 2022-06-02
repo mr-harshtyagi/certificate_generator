@@ -7,9 +7,8 @@ var CryptoJS = require("crypto-js");
 
 export default function SideForm(){
   const { name,course,professor,setName,setCourse,setProfessor } = useContext(FormContext); 
-  const [secretKey,setSecretKey] =useState("")
-  const privateKey = "F9LwFF7Jmuf2w7icRk3MTBozP333i8TWKKAFmbfrUHVT";
-  const publicKey = "GjgJq7htpLt3rYFTPUyqKBtanupjjuwy6mtYvattKNpN";
+  const [secretKey,setSecretKey] =useState("identrix");
+  const [receiver, setReceiver] = useState("xyz@gmail.com");
 
   function postDataToServer(){
     let certificateData={
@@ -17,17 +16,17 @@ export default function SideForm(){
       course:course,
       professor:professor
     }
-    let hash = CryptoJS.SHA256(JSON.stringify(certificateData)).toString(
-      CryptoJS.enc.Hex
-    );
+
+    let hash = CryptoJS.SHA256(JSON.stringify(certificateData)).toString(CryptoJS.enc.Hex);
+    // const sign = createSign("SHA256");
+    // sign.write(hash);
+    // sign.end();
+    // const signature = sign.sign(privateKey, "hex");
 
     let dataObject = {
       transaction_hash:hash, //hash 3 fields
-      publicKey: publicKey,
-      privateKey:privateKey,
-      receiver: "0x1236427d1f1279d5951d61fdf5ab6476e9cf530f", //wallet address of receiver
+      receiver:receiver.slice(0,2) + "*****" + receiver.substring(receiver.indexOf('@'), receiver.length)  , //send email starred
       key:secretKey,
-      signature:"faltu signature"
     };
 
       // axios post dataObject 
@@ -103,16 +102,16 @@ export default function SideForm(){
               e.preventDefault();
             }}
           >
-            <Form.Group
-              onChange={(e) => {
-                setSecretKey(e.target.value);
-              }}
-              value={secretKey}
-              className="mb-3"
-              controlId="key"
-            >
+            <Form.Group className="mb-3" controlId="key">
               <Form.Label>Secret Key</Form.Label>
-              <Form.Control type="text" placeholder="Enter Secret Key" />
+              <Form.Control
+                onChange={(e) => {
+                  setSecretKey(e.target.value);
+                }}
+                value={secretKey}
+                type="text"
+                placeholder="Enter Secret Key"
+              />
             </Form.Group>
             <Form.Group className="mb-3" controlId="issuer">
               <Form.Label>Issuer's Public Key</Form.Label>
@@ -120,23 +119,25 @@ export default function SideForm(){
                 onChange={() => {}}
                 value="GjgJq7htpLt3rYFTPUyqKBtanupjjuwy6mtYvattKNpN"
                 type="text"
-                placeholder=""
+                placeholder="IDX's Default Public Key"
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="receiver">
               <Form.Label>Receiver</Form.Label>
               <Form.Control
-                onChange={() => {}}
-                value="0x1236427d1f1279d5951d61fdf5ab6476e9cf530f"
+                onChange={(e) => {
+                  setReceiver(e.target.value);
+                }}
+                value={receiver}
                 type="text"
-                placeholder=""
+                placeholder="Enter email"
               />
             </Form.Group>
 
-            <Button variant="primary" type="submit">
+            <Button onClick={postDataToServer} variant="primary" type="submit">
               Issue Credential
             </Button>
-            <Button onClick={postDataToServer} className="ms-4" variant="danger">
+            <Button className="ms-4" variant="danger">
               PDF
             </Button>
           </Form>

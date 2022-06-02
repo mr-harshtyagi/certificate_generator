@@ -12,8 +12,7 @@ export default function Certificate() {
           borderStyle: "solid",
           borderWidth: "8px",
           borderColor: "#446A46",
-        }}
-      >
+        }}>
         <div
           style={{
             height: "450px",
