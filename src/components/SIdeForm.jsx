@@ -8,7 +8,7 @@ var CryptoJS = require("crypto-js");
 export default function SideForm(){
   const { name,course,professor,setName,setCourse,setProfessor } = useContext(FormContext); 
   const [secretKey,setSecretKey] =useState("identrix");
-  const [receiver, setReceiver] = useState("xyz@gmail.com");
+  const [receiver, setReceiver] = useState("xyz12345@gmail.com");
 
   function postDataToServer(){
     let certificateData={
@@ -18,10 +18,6 @@ export default function SideForm(){
     }
 
     let hash = CryptoJS.SHA256(JSON.stringify(certificateData)).toString(CryptoJS.enc.Hex);
-    // const sign = createSign("SHA256");
-    // sign.write(hash);
-    // sign.end();
-    // const signature = sign.sign(privateKey, "hex");
 
     let dataObject = {
       transaction_hash:hash, //hash 3 fields
