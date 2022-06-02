@@ -30,11 +30,31 @@ export default function SideForm(){
         .post("https://bigchaindb-post-txn.herokuapp.com/post", dataObject)
         .then(function (response) {
           console.log(response.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-  }
+          axios
+            .get("https://bigchaindb-post-txn.herokuapp.com/getcertid")
+            .then(function (response) {
+              console.log(response.data);
+              axios
+                .post("https://bigchaindb-post-txn.herokuapp.com/posttomongo", {
+                  doc_uid: "1", //get from server certificate no.
+                  hash: response.data,
+                  certificate_data: certificateData,
+                })
+                .then(function (response) {
+                  console.log(response.data);
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+          })
+          .catch(function (error){
+            console.log(error);
+          });
+        }
   
     return (
       <>
