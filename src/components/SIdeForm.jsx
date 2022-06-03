@@ -74,7 +74,7 @@ setShow((prevData)=>({...prevData,d1:""}))
                            "https://bigchaindb-post-txn.herokuapp.com/posttomongo",
                            {
                              doc_uid: id, //get from server certificate no.
-                             hash: hash,
+                             hash: response.data.hash,
                              certificate_data: certificateData,
                            }
                          )
