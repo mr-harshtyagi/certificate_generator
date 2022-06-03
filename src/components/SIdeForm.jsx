@@ -12,11 +12,12 @@ export default function SideForm(){
     setShow,
     setName,
     setCourse,
-    setProfessor } = useContext(FormContext); 
+    setProfessor,
+    setCertId } = useContext(FormContext); 
   const [secretKey,setSecretKey] =useState("identrix");
   const [receiver, setReceiver] = useState("xyz12345@gmail.com");
 
-  function postDataToServer(){
+function postDataToServer(){
       setShow(() => ({
         d1: "none",
         d2: "none",
@@ -36,6 +37,7 @@ setShow((prevData)=>({...prevData,d1:""}))
         .get("https://bigchaindb-post-txn.herokuapp.com/getcertid")
         .then(function (response) {
           let id = response.data.id;
+          setCertId(10000000+ Number(id));
              setTimeout(() => {
                setShow((prevData) => ({ ...prevData, d2: "" }));
                setTimeout(() => {
@@ -190,9 +192,6 @@ setShow((prevData)=>({...prevData,d1:""}))
 
             <Button onClick={postDataToServer} variant="primary" type="submit">
               Issue Credential
-            </Button>
-            <Button className="ms-4" variant="danger">
-              PDF
             </Button>
           </Form>
         </div>

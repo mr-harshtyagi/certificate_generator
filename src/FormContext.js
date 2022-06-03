@@ -5,6 +5,7 @@ export function FormProvider({ children }) {
   const [name, setName] = useState("X")
   const [course, setCourse] = useState("X");
   const [professor, setProfessor] = useState("X");
+  const [cert_id, setCertId] = useState("XXXXXXXX");
     const [show, setShow] = useState({
       d1: "none",
       d2: "none",
@@ -12,13 +13,13 @@ export function FormProvider({ children }) {
       d4: "none",
       d5: "none",
       d6: "none",
-      hash:""
+      hash:"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
     });
 
 
   return (
     <FormContext.Provider
-      value={{ name,course,professor,show,setShow,setCourse,setName,setProfessor }}
+      value={{ name,course,professor,show,cert_id,setCertId,setShow,setCourse,setName,setProfessor }}
     >
       {children}
     </FormContext.Provider>

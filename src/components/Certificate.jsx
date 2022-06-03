@@ -1,8 +1,10 @@
 import FormContext from "../FormContext";
 import { useContext } from "react";
+import {useNavigate } from "react-router-dom";
 
 export default function Certificate() {
-  const { name,course,professor } = useContext(FormContext);
+  let navigate =useNavigate();
+  const { name,course,professor,cert_id,show } = useContext(FormContext);
   return (
     <>
       <div
@@ -12,7 +14,8 @@ export default function Certificate() {
           borderStyle: "solid",
           borderWidth: "8px",
           borderColor: "#446A46",
-        }}>
+        }}
+      >
         <div
           style={{
             height: "450px",
@@ -36,20 +39,36 @@ export default function Certificate() {
             margin: "20px",
           }}
         >
+          <a
+            href={`https://react-app-testing.vercel.app/transaction/${show.hash}`}
+            style={{
+              padding: "0",
+              float: "right",
+              fontSize: "0.8rem",
+              marginRight: "10px",
+              textDecoration: "none",
+              color: "grey",
+            }}
+          >
+            Document Hash : {show.hash}
+          </a>
           <div
             style={{
               width: "100%",
               backgroundColor: "#FAF5E4",
-              height: "100px",
+              height: "110px",
               borderRadius: "10px",
             }}
           >
             <img
               src="images/logo.png"
               alt="logo"
-              style={{ height: "80px", margin: "12px", float: "left" }}
+              style={{ height: "80px", margin: "15px", float: "left" }}
             />
             <h1 style={{ paddingTop: "10px" }}>BITS PILANI GOA</h1>
+            <div style={{ float: "right", marginRight: "30px" }}>
+              <p>Certificate ID: {cert_id}</p>
+            </div>
             <h6> Pilani | Goa | Hyderabad | Dubai</h6>
           </div>
           <div style={{ textAlign: "center" }}>
@@ -93,19 +112,8 @@ export default function Certificate() {
               <h5>{new Date().toDateString()}</h5>
             </div>
             <div style={{ float: "right", marginRight: "20px" }}>
-              <img
-                style={{ height: "70px", marginTop: "15px", float: "right" }}
-                src="images/sign.jpg"
-                alt="signature"
-              />
-            </div>
-            <div
-              style={{
-                float: "right",
-                marginRight: "-150px",
-                marginTop: "90px",
-              }}
-            >
+              <div style={{ marginTop: "45px" }} />
+              
               <h6>{professor}</h6>
               <h6 style={{ fontSize: "0.7rem" }}>CSE Department, Goa Campus</h6>
             </div>
