@@ -14,6 +14,7 @@ export default function Certificate() {
           borderStyle: "solid",
           borderWidth: "8px",
           borderColor: "#446A46",
+          borderRadius: "20px",
         }}
       >
         <div
@@ -28,30 +29,44 @@ export default function Certificate() {
           }}
         >
           <img
-            style={{ width: "300px", marginTop: "80px" }}
+            style={{
+              width: "300px",
+              marginTop: "80px",
+              marginLeft: "55px",
+            }}
             src="images/logo.png"
             alt="logo"
           />
         </div>
         <div
           style={{
-            height: "450px",
-            margin: "20px",
+            height: "470px",
+            margin: "10px",
           }}
         >
-          <a
-            href={`https://react-app-testing.vercel.app/transaction/${show.hash}`}
+          <p
+            onClick={() => {
+              window.open(
+                `https://react-app-testing.vercel.app/transaction/${show.hash}`,
+                "_blank",
+                "noopener,noreferrer"
+              );
+            }}
             style={{
               padding: "0",
               float: "right",
               fontSize: "0.8rem",
               marginRight: "10px",
+              cursor: "pointer",
+              marginTop: "0px",
               textDecoration: "none",
               color: "grey",
             }}
           >
             Document Hash : {show.hash}
-          </a>
+          </p>
+
+          <br />
           <div
             style={{
               width: "100%",
@@ -61,15 +76,38 @@ export default function Certificate() {
             }}
           >
             <img
-              src="images/logo.png"
+              src="../../images/logo.png"
               alt="logo"
-              style={{ height: "80px", margin: "15px", float: "left" }}
+              style={{
+                height: "80px",
+                margin: "12px",
+                marginTop: "0px",
+                float: "left",
+              }}
             />
             <h1 style={{ paddingTop: "10px" }}>BITS PILANI GOA</h1>
-            <div style={{ float: "right", marginRight: "30px" }}>
-              <p>Certificate ID: {cert_id}</p>
-            </div>
             <h6> Pilani | Goa | Hyderabad | Dubai</h6>
+            <div
+              style={{
+                float: "right",
+                marginRight: "30px",
+                marginTop: "-50px",
+              }}
+            >
+              <p
+                style={{
+                  fontSize: " 1rem",
+                  padding: "3px",
+                  fontWeight: "900",
+                  fontFamily: "monospace",
+                  whiteSpace: "normal",
+                  border: "solid 2px",
+                  borderRadius: "10px",
+                }}
+              >
+                Certificate ID: {cert_id}
+              </p>
+            </div>
           </div>
           <div style={{ textAlign: "center" }}>
             <h1
@@ -106,14 +144,39 @@ export default function Certificate() {
             </h1>
             <hr />
             <div
-              style={{ float: "left", marginLeft: "20px", marginTop: "20px" }}
+              style={{
+                float: "left",
+                marginLeft: "20px",
+                marginTop: "20px",
+              }}
             >
               <h6>Issued on: </h6>
               <h5>{timeStamp}</h5>
             </div>
+            <div
+              style={{
+                textAlign: "center",
+                display: "inline-block",
+                marginTop: "20px",
+              }}
+            >
+              <button
+              style={{display: show.d6}}
+                onClick={() => {
+                  window.open(
+                    `http://localhost:3001/${Number(cert_id) - 10000000}/${show.hash}`,
+                    "_blank",
+                    "noopener,noreferrer"
+                  );
+                }}
+                className="btn btn-primary"
+              >
+                View Certificate
+              </button>
+            </div>
             <div style={{ float: "right", marginRight: "20px" }}>
-              <div style={{ marginTop: "45px" }} />
-              
+              <div style={{ marginTop: "25px" }} />
+
               <h6>{professor}</h6>
               <h6 style={{ fontSize: "0.7rem" }}>CSE Department, Goa Campus</h6>
             </div>
