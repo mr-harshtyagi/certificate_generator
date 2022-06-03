@@ -6,56 +6,94 @@ import axios from 'axios';
 var CryptoJS = require("crypto-js");
 
 export default function SideForm(){
-  const { name,course,professor,setName,setCourse,setProfessor } = useContext(FormContext); 
+  const { name,
+    course,
+    professor,
+    setShow,
+    setName,
+    setCourse,
+    setProfessor } = useContext(FormContext); 
   const [secretKey,setSecretKey] =useState("identrix");
   const [receiver, setReceiver] = useState("xyz12345@gmail.com");
 
   function postDataToServer(){
+      setShow(() => ({
+        d1: "none",
+        d2: "none",
+        d3: "none",
+        d4: "none",
+        d5: "none",
+        d6: "none",
+      }));
     let certificateData={
       name:name,
       course:course,
       professor:professor
     }
-
-    let hash = CryptoJS.SHA256(JSON.stringify(certificateData)).toString(CryptoJS.enc.Hex);
-
-    let dataObject = {
-      transaction_hash:hash, //hash 3 fields
-      receiver:receiver.slice(0,2) + "*****" + receiver.substring(receiver.indexOf('@'), receiver.length)  , //send email starred
-      key:secretKey,
-    };
-
-      // axios post dataObject 
+let hash = CryptoJS.SHA256(JSON.stringify(certificateData)).toString(CryptoJS.enc.Hex);
+setShow((prevData)=>({...prevData,d1:""}))
       axios
-        .post("https://bigchaindb-post-txn.herokuapp.com/post", dataObject)
+        .get("https://bigchaindb-post-txn.herokuapp.com/getcertid")
         .then(function (response) {
-          console.log(response.data);
-          axios
-            .get("https://bigchaindb-post-txn.herokuapp.com/getcertid")
-            .then(function (response) {
-              console.log(response.data);
-              axios
-                .post("https://bigchaindb-post-txn.herokuapp.com/posttomongo", {
-                  doc_uid: "1", //get from server certificate no.
-                  hash: response.data,
-                  certificate_data: certificateData,
-                })
-                .then(function (response) {
-                  console.log(response.data);
-                })
-                .catch(function (error) {
-                  console.log(error);
-                });
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
-          })
-          .catch(function (error){
-            console.log(error);
-          });
-        }
-  
+          let id = response.data.id;
+             setTimeout(() => {
+               setShow((prevData) => ({ ...prevData, d2: "" }));
+               setTimeout(() => {
+                 setShow((prevData) => ({ ...prevData, d3: "" }));
+                 setTimeout(() => {
+                  setShow((prevData) => ({ ...prevData, d4: "" }));
+                  let dataObject = {
+                    doc_uid: id,
+                    transaction_hash: hash,
+                    receiver:
+                      receiver.slice(0, 2) +
+                      "*****" +
+                      receiver.substring(
+                        receiver.indexOf("@"),
+                        receiver.length
+                      ),
+                    key: secretKey,
+                  };
+                   axios
+                     .post(
+                       "https://bigchaindb-post-txn.herokuapp.com/post",
+                       dataObject
+                     )
+                     .then(function (response) {
+                       console.log(response.data);
+                       setShow((prevData) => ({
+                         ...prevData,
+                         hash: response.data.hash,
+                       }));
+                       setShow((prevData) => ({ ...prevData, d5: "" }));
+                       axios
+                         .post(
+                           "https://bigchaindb-post-txn.herokuapp.com/posttomongo",
+                           {
+                             doc_uid: id, //get from server certificate no.
+                             hash: hash,
+                             certificate_data: certificateData,
+                           }
+                         )
+                         .then(function (response) {
+                           setShow((prevData) => ({ ...prevData, d6: "" }));
+                         })
+                         .catch(function (error) {
+                           console.log(error);
+                         });
+                     })
+                     .catch(function (error) {
+                       console.log(error);
+                     });
+                 }, 100);
+               }, 100);
+             }, 100); 
+      })
+        .catch(function (error) {
+          console.log(error);
+        });
+      }
+        
     return (
       <>
         <div
