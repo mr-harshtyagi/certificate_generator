@@ -164,7 +164,9 @@ export default function Certificate() {
               style={{display: show.d6}}
                 onClick={() => {
                   window.open(
-                    `http://localhost:3001/${Number(cert_id) - 10000000}/${show.hash}`,
+                    `https://idx-certificate-viewer.vercel.app/${
+                      Number(cert_id) - 10000000
+                    }/${show.hash}`,
                     "_blank",
                     "noopener,noreferrer"
                   );
