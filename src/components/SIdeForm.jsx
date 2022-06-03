@@ -13,6 +13,7 @@ export default function SideForm(){
     setName,
     setCourse,
     setProfessor,
+    setTime,
     setCertId } = useContext(FormContext); 
   const [secretKey,setSecretKey] =useState("identrix");
   const [receiver, setReceiver] = useState("xyz12345@gmail.com");
@@ -79,6 +80,7 @@ setShow((prevData)=>({...prevData,d1:""}))
                          )
                          .then(function (response) {
                            setShow((prevData) => ({ ...prevData, d6: "" }));
+                           setTime(response.data);
                          })
                          .catch(function (error) {
                            console.log(error);

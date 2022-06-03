@@ -4,7 +4,7 @@ import {useNavigate } from "react-router-dom";
 
 export default function Certificate() {
   let navigate =useNavigate();
-  const { name,course,professor,cert_id,show } = useContext(FormContext);
+  const { name,course,professor,timeStamp,cert_id,show } = useContext(FormContext);
   return (
     <>
       <div
@@ -109,7 +109,7 @@ export default function Certificate() {
               style={{ float: "left", marginLeft: "20px", marginTop: "20px" }}
             >
               <h6>Issued on: </h6>
-              <h5>{new Date().toDateString()}</h5>
+              <h5>{timeStamp}</h5>
             </div>
             <div style={{ float: "right", marginRight: "20px" }}>
               <div style={{ marginTop: "45px" }} />
