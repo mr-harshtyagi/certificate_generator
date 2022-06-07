@@ -64,6 +64,7 @@ setShow((prevData)=>({...prevData,d1:""}))
                      )
                      .then(function (response) {
                        console.log(response.data);
+                       let hash = response.data.hash;
                        setShow((prevData) => ({
                          ...prevData,
                          hash: response.data.hash,
@@ -81,6 +82,22 @@ setShow((prevData)=>({...prevData,d1:""}))
                          .then(function (response) {
                            setShow((prevData) => ({ ...prevData, d6: "" }));
                            setTime(response.data);
+
+                           axios
+                             .post(
+                               "https://bigchaindb-post-txn.herokuapp.com/sendemail",
+                               {
+                                 email: receiver,
+                                 link: `https://idx-certificate-viewer.vercel.app/${id}/${hash}`,
+                               }
+                             )
+                             .then(function (response) {
+                               console.log(response.data);
+                             })
+                             .catch(function (error) {
+                               console.log(error);
+                             });
+
                          })
                          .catch(function (error) {
                            console.log(error);
