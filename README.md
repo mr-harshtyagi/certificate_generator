@@ -1,2 +1,2 @@
 # IDX Block Explorer
-This is blockchain explorer for Identrix protocol network.
+This is blockchain based certificate generator for Identrix protocol network.
